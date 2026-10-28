@@ -72,8 +72,10 @@ app.use((err, _req, res, _next) => {
         stack: env_1.config.NODE_ENV === "development" ? err.stack : undefined
     });
 });
-app.listen(PORT, () => {
-    console.log(`🚀 Pharma DMS Express Backend (MVC Architecture) running on http://localhost:${PORT}`);
-    console.log(`📡 Health Check: http://localhost:${PORT}/api/health`);
-});
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Pharma DMS Express Backend (MVC Architecture) running on http://localhost:${PORT}`);
+        console.log(`📡 Health Check: http://localhost:${PORT}/api/health`);
+    });
+}
 exports.default = app;
